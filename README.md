@@ -22,4 +22,4 @@ For Example:
 jjs -cp my-mock-server-1.0-SNAPSHOT.jar sample/my-server.js
 ```
 
-You can use pom file to generate jar file ```mvn package assembly:single``` for download it from [releases page](https://github.com/wpic/my-mock-server/releases).
+You can use pom file to generate jar file ```mvn package assembly:single``` for download it from [releases page](https://github.com/wpic/my-mock-server/releases) (Unzip it).
