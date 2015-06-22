@@ -9,7 +9,7 @@ function MyMockServer(base, handlers) {
     var File = Java.type("java.io.File");
     var Scanner = Java.type("java.util.Scanner");
     var JCoffeeScriptCompiler = Java.type("org.jcoffeescript.JCoffeeScriptCompiler");
-    var LessEngine = Java.type("com.asual.lesscss.LessEngine");
+    var Less = Java.type("com.inet.lib.less.Less");
     var FileUtils = Java.type("org.apache.commons.io.FileUtils");
     var ByteBuffer = Java.type("java.nio.ByteBuffer");
     var String = Java.type("java.lang.String");
@@ -30,14 +30,14 @@ function MyMockServer(base, handlers) {
     }
 
     var toCss = function(name) {
-        var engine = new LessEngine();
+        //var engine = new LessEngine();
         var file = new File(dir, name);
         if (file.exists()) {
             var cache = new File(dir, name + ".cache");
             var newer = isNewer(dir, cache, 'css');
             if (newer) {
-                var less = new Scanner(file).useDelimiter("\\A").next();
-                var css = engine.compile(less);
+                //var less = new Scanner(file).useDelimiter("\\A").next();
+                var css = Less.compile(file, false);
                 FileUtils.writeStringToFile(cache, css);
                 return css;
             }

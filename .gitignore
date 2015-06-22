@@ -4,3 +4,4 @@ target/
 *.iml
 *.cache
 *.jar
+*.zip
