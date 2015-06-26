@@ -117,8 +117,13 @@ function MyMockServer(base, handlers) {
                         exchange.setResponseCode(404);
                     }
                     else {
-                        if (result.constructor == String) {
-                            exchange.getResponseHeaders().put(Headers.CONTENT_TYPE, 'text/plain');
+                        if (typeof(result) == 'string') {
+                            if (result.startsWith('<')) {
+                                exchange.getResponseHeaders().put(Headers.CONTENT_TYPE, 'text/html');
+                            }
+                            else {
+                                exchange.getResponseHeaders().put(Headers.CONTENT_TYPE, 'text/plain');
+                            }
                             exchange.getResponseSender().send(result);
                         }
                         else {
