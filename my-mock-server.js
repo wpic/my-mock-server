@@ -34,7 +34,7 @@ function MyMockServer(base, handlers) {
         var file = new File(dir, name);
         if (file.exists()) {
             var cache = new File(dir, name + ".cache");
-            var newer = isNewer(dir, cache, 'css');
+            var newer = isNewer(dir, cache, 'less');
             if (newer) {
                 //var less = new Scanner(file).useDelimiter("\\A").next();
                 var css = Less.compile(file, false);
