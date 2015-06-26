@@ -6,11 +6,11 @@ function MyMockServer(base, handlers) {
     var Headers = Java.type("io.undertow.util.Headers");
     var HttpHandler = Java.type("io.undertow.server.HttpHandler");
     var FileResourceManager = Java.type("io.undertow.server.handlers.resource.FileResourceManager");
-    var File = Java.type("java.io.File");
-    var Scanner = Java.type("java.util.Scanner");
-    var JCoffeeScriptCompiler = Java.type("org.jcoffeescript.JCoffeeScriptCompiler");
+    var File = Java.type('java.io.File');
+    var Scanner = Java.type('java.util.Scanner');
+    var JCoffeeScriptCompiler = Java.type('org.jcoffeescript.JCoffeeScriptCompiler');
     var Less = Java.type("com.inet.lib.less.Less");
-    var FileUtils = Java.type("org.apache.commons.io.FileUtils");
+    var FileUtils = Java.type('org.apache.commons.io.FileUtils');
     var ByteBuffer = Java.type("java.nio.ByteBuffer");
     var String = Java.type("java.lang.String");
 
@@ -176,4 +176,29 @@ MyMockServer.prototype.start = function() {
     // Wait for all thread to finish
     var Thread = Java.type("java.lang.Thread");
     Thread.currentThread().join();
+}
+
+var loadCoffee = function(path) {
+    var JCoffeeScriptCompiler = Java.type('org.jcoffeescript.JCoffeeScriptCompiler');
+    var File = Java.type('java.io.File');
+    var Scanner = Java.type('java.util.Scanner');
+    var FileUtils = Java.type('org.apache.commons.io.FileUtils');
+
+    if (path.endsWith('.js')) {
+        load(path);
+    }
+    else if (path.endsWith('.coffee')) {
+        var compiler = new JCoffeeScriptCompiler();
+        var file = new File(path);
+        var cache = new File(path + ".cache");
+
+        var coffeescript = new Scanner(file).useDelimiter("\\A").next();
+        var js = compiler.compile(coffeescript);
+        FileUtils.writeStringToFile(cache, js);
+
+        load(path + ".cache");
+    }
+    else {
+        throw 'Illegal format: ' + path;
+    }
 }
